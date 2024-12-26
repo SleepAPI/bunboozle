@@ -13,15 +13,27 @@ export function boozle<T extends Record<string, ModuleValue>, TKey extends Modul
     throw new Error(`${String(functionName)} is not a function in the provided module.`);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  const isAsync = (fn: Function): boolean => Object.prototype.toString.call(fn) === '[object AsyncFunction]';
+
+  const originalFunction = module[functionName] as (...args: any[]) => any;
+  const isAsyncFunction = isAsync(originalFunction);
+
   const spy = spyOn(module, functionName) as Mock<MockImplementation<T, TKey>>;
 
   if (implementations.length === 0) {
-    spy.mockImplementation(() => undefined);
+    spy.mockImplementation(() => (isAsyncFunction ? Promise.resolve(undefined) : undefined));
   } else if (implementations.length === 1) {
-    spy.mockImplementation(implementations[0]);
+    spy.mockImplementation((...args: Parameters<T[TKey]>) => {
+      const result = implementations[0](...args);
+      return isAsyncFunction ? Promise.resolve(result) : result;
+    });
   } else {
     implementations.forEach((impl) => {
-      spy.mockImplementationOnce(impl);
+      spy.mockImplementationOnce((...args: Parameters<T[TKey]>) => {
+        const result = impl(...args);
+        return isAsyncFunction ? Promise.resolve(result) : result;
+      });
     });
   }
 
