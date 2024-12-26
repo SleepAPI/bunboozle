@@ -1,23 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { afterEach, beforeAll, mock, Mock, spyOn } from 'bun:test';
-import { ExtractFunction, ModuleKey, ModuleValue } from './types/types.js';
+import { MockImplementation, ModuleKey, ModuleValue } from './types/types.js';
 
 const activeSpies = new Set<Mock<(...args: any[]) => any>>();
 
-// export function boozle<T extends Record<string, ModuleValue>>(module: T): Mock<T>;
-
-export function boozle<
-  T extends Record<string, ModuleValue>,
-  TKey extends ModuleKey<T>,
-  TFunc extends ExtractFunction<T, TKey>
->(module: T, functionName: TKey, ...implementations: Array<TFunc>): Mock<TFunc> {
+export function boozle<T extends Record<string, ModuleValue>, TKey extends ModuleKey<T>>(
+  module: T,
+  functionName: TKey,
+  ...implementations: Array<MockImplementation<T, TKey>>
+): Mock<MockImplementation<T, TKey>> {
   if (typeof module[functionName] !== 'function') {
     throw new Error(`${String(functionName)} is not a function in the provided module.`);
   }
 
-  const spy = spyOn(module, functionName) as Mock<TFunc>;
+  const spy = spyOn(module, functionName) as Mock<MockImplementation<T, TKey>>;
 
-  if (implementations.length === 1) {
+  if (implementations.length === 0) {
+    spy.mockImplementation(() => undefined);
+  } else if (implementations.length === 1) {
     spy.mockImplementation(implementations[0]);
   } else {
     implementations.forEach((impl) => {

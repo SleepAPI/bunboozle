@@ -21,12 +21,12 @@ describe('bunboozle', () => {
     expect(spy).toHaveBeenCalledWith('Test2');
   });
 
-  it('should mock a single implementation', () => {
-    const spy = boozle(mockModule, 'function1', (arg: string) => `Mocked with: ${arg}`);
+  it('should default implementation to undefined', () => {
+    const spy = boozle(mockModule, 'function1');
 
-    expect(mockModule.function1('Test1')).toBe('Mocked with: Test1');
+    expect(mockModule.function1('Test1')).toBeUndefined();
     expect(spy).toHaveBeenCalledWith('Test1');
-    expect(mockModule.function1('Test2')).toBe('Mocked with: Test2');
+    expect(mockModule.function1('Test2')).toBeUndefined();
     expect(spy).toHaveBeenCalledWith('Test2');
   });
 
