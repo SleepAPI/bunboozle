@@ -1,0 +1,43 @@
+{
+  "name": "bunboozle",
+  "version": "1.0.0",
+  "description": "A Bun mocking library that simplifies the mocking process.",
+  "author": "McMomo",
+  "contributors": [
+    {
+      "name": "McMomo",
+      "url": "https://github.com/SleepAPI"
+    }
+  ],
+  "keywords": ["bun", "testing", "mocking", "typescript"],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SleepAPI/bunboozle.git"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc --declaration",
+    "lint": "eslint . && prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "@eslint/json": "^0.8.0",
+    "@eslint/markdown": "^6.2.1",
+    "@types/bun": "^1.1.14",
+    "@types/eslint-config-prettier": "^6.11.3",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "bun-types": "^1.1.42",
+    "eslint": "^9.16.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.14.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.17.0"
+  }
+}

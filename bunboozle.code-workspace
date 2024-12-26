@@ -1,0 +1,46 @@
+{
+  "folders": [
+    {
+      "name": "Project files",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit",
+      "source.fixAll": "explicit",
+      "source.fixAll.eslint": "explicit"
+    },
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "eslint.validate": ["javascript", "typescript", "json", "markdown"],
+    "files.exclude": {
+      ".vscode": true,
+      "dev-dist": true,
+      "node_modules": true,
+      "package-lock.json": true,
+      "*.tsbuildinfo": true,
+      "coverage": true,
+      "test-results": true,
+      "*.d.*": true
+    },
+    "files.eol": "\n",
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "bot": true
+    },
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "javascript.preferences.importModuleSpecifier": "non-relative"
+  },
+  "extensions": {
+    "recommendations": [
+      "EditorConfig.EditorConfig",
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "gruntfuggly.todo-tree"
+    ]
+  }
+}
