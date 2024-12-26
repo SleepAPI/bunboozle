@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ExtractFunction, ModuleKey, ModuleValue } from '@src/types/types.js';
 import { afterEach, beforeAll, mock, Mock, spyOn } from 'bun:test';
+import { ExtractFunction, ModuleKey, ModuleValue } from './types/types.js';
 
 const activeSpies = new Set<Mock<(...args: any[]) => any>>();
 
