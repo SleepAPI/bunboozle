@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { afterEach, beforeAll, Mock, spyOn } from 'bun:test';
-import { vi } from 'vitest';
+import { afterEach, Mock, spyOn } from 'bun:test';
 import { ExtractFunction, MockImplementation, ModuleKey, ModuleValue } from './types/types.js';
 
 const activeSpies = new Set<Mock<(...args: any[]) => any>>();
+let restoreHookRegistered = false;
 
 /**
  * Main boozle function to mock functions or variables.
@@ -15,6 +15,10 @@ export function boozle<T extends Record<string, ModuleValue>, TKey extends Modul
 ): Mock<MockImplementation<T, TKey>> {
   if (!(property in module)) {
     throw new Error(`${String(property)} is not a property of the provided module.`);
+  }
+
+  if (!restoreHookRegistered) {
+    registerMockRestoreHook();
   }
 
   const originalValue = module[property];
@@ -105,14 +109,18 @@ function mockVariable<T extends Record<string, ModuleValue>, TKey extends Module
     });
   }
 
+  activeSpies.add(spy);
   return spy;
 }
 
-/**
- * Use beforeAll to attach afterEach to the test suite's lifecycle.
- */
-beforeAll(() => {
+function registerMockRestoreHook() {
   afterEach(() => {
-    vi.restoreAllMocks();
+    console.error('Restoring mocks');
+    for (const spy of activeSpies) {
+      console.error('Restored mock: ' + spy.name);
+      spy.mockRestore();
+    }
+    activeSpies.clear();
+    restoreHookRegistered = true;
   });
-});
+}

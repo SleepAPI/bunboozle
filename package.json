@@ -1,6 +1,6 @@
 {
   "name": "bunboozle",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A Bun mocking library that simplifies the mocking process.",
   "author": "McMomo",
   "contributors": [
