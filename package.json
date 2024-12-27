@@ -1,6 +1,6 @@
 {
   "name": "bunboozle",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A Bun mocking library that simplifies the mocking process.",
   "author": "McMomo",
   "contributors": [
@@ -15,7 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/SleepAPI/bunboozle.git"
   },
-  "main": "./dist/index.js",
+  "main": "./dist/bunboozle.js",
   "types": "./dist/index.d.ts",
   "type": "module",
   "files": ["dist"],

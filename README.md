@@ -7,7 +7,14 @@ Mock the module and function, set the mocked implementation and spy on the resul
 
 The mock will automatically revert to the original functionality afterEach test.
 
-### Simple mock
+## Features
+
+- Mock functions and variables in any module (files, classes, objects)
+- Automatically attach a spy that is returned
+- Automatically restore the original implementation afterEach
+- Full Typescript support, get type hints for any module property
+
+### Simple function mock
 
 ```typescript
 import * as mockModule from 'some-module.js';
@@ -22,7 +29,31 @@ it('should mock a single implementation', () => {
 });
 ```
 
-### Mock with `mockImplementationOnce`
+### Simple variable mock
+
+```typescript
+import * as mockModule from 'some-module.js';
+
+it('should mock a variable', () => {
+  boozle(mockModule, 'myVariable', 42);
+
+  expect(mockModule.myVariable).toBe(42);
+});
+```
+
+### Skip the explicit function call if not interested in parameters
+
+```typescript
+import * as mockModule from 'some-module.js';
+
+it('should mock a function', () => {
+  boozle(mockModule, 'myFunction', 'Mocked string');
+
+  expect(mockModule.myFunction).toBe('Mocked string');
+});
+```
+
+### Mock functions with `mockImplementationOnce`
 
 ```typescript
 import * as mockModule from 'some-module.js';
@@ -40,3 +71,12 @@ it('should mock multiple implementations in sequence', () => {
   expect(mockModule.myFunction('Test4')).toBe('Original implementation: Test4');
 });
 ```
+
+## Roadmap
+
+- [x] Mock functions with mockImplementation.
+- [x] Mock functions with mockImplementationOnce for sequential mocking.
+- [x] Automatically restore original implementation after each test.
+- [x] Mock variables with a single value.
+- [ ] Mock variables with mockImplementationOnce for sequential values.
+- [x] Built-in support for spying on function calls without mocking.
