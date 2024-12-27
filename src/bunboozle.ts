@@ -110,7 +110,6 @@ function mockVariable<T extends Record<string, ModuleValue>, TKey extends Module
 
 export function unboozle() {
   for (const spy of activeSpies) {
-    console.error('Restored mock: ' + (spy.name || 'unnamed mock'));
     spy.mockRestore();
   }
   activeSpies.clear();
