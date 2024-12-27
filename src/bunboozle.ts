@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { afterEach, beforeAll, Mock, spyOn } from 'bun:test';
+import { vi } from 'vitest';
 import { ExtractFunction, MockImplementation, ModuleKey, ModuleValue } from './types/types.js';
 
 const activeSpies = new Set<Mock<(...args: any[]) => any>>();
@@ -104,7 +105,6 @@ function mockVariable<T extends Record<string, ModuleValue>, TKey extends Module
     });
   }
 
-  activeSpies.add(spy);
   return spy;
 }
 
@@ -113,9 +113,6 @@ function mockVariable<T extends Record<string, ModuleValue>, TKey extends Module
  */
 beforeAll(() => {
   afterEach(() => {
-    for (const spy of activeSpies) {
-      spy.mockRestore();
-    }
-    activeSpies.clear();
+    vi.restoreAllMocks();
   });
 });

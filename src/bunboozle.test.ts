@@ -3,6 +3,7 @@ import { boozle } from './bunboozle.js';
 
 class MockModuleImpl {
   publicVariable: number = 0;
+  publicObject: { name: string };
 
   public function1(arg: string): string {
     return `[1] Original implementation: ${arg}`;
@@ -76,11 +77,29 @@ describe('bunboozle', () => {
     });
   });
 
+  describe('should not persist mocks between tests', () => {
+    it('setup', () => {
+      boozle(MockModule, 'function1', () => 'Mocked string');
+
+      expect(MockModule.function1('Something')).toBe('Mocked string');
+    });
+
+    it('verify', () => {
+      expect(MockModule.function1('Something')).toBe('[1] Original implementation: Something');
+    });
+  });
+
   describe('variables', () => {
     it('should mock a variable', () => {
       boozle(MockModule, 'publicVariable', 1);
 
       expect(MockModule.publicVariable).toBe(1);
+    });
+
+    it('should mock an object', () => {
+      boozle(MockModule, 'publicObject', { name: 'some-name' });
+
+      expect(MockModule.publicObject).toEqual({ name: 'some-name' });
     });
 
     it('should set variable to undefined if no implementation is provided', () => {
