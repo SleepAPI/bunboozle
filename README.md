@@ -5,13 +5,12 @@
 
 Mock the module and function, set the mocked implementation and spy on the result all in one quick call.
 
-The mock will automatically revert to the original functionality afterEach test.
+You can revert mocks by using unboozle() from bunboozle, for example in your afterEach hook.
 
 ## Features
 
 - Mock functions and variables in any module (files, classes, objects)
 - Automatically attach a spy that is returned
-- Automatically restore the original implementation afterEach
 - Full Typescript support, get type hints for any module property
 
 ### Simple function mock
@@ -76,7 +75,7 @@ it('should mock multiple implementations in sequence', () => {
 
 - [x] Mock functions with mockImplementation.
 - [x] Mock functions with mockImplementationOnce for sequential mocking.
-- [x] Automatically restore original implementation after each test.
+- [ ] Automatically restore original implementation after each test.
 - [x] Mock variables with a single value.
 - [ ] Mock variables with mockImplementationOnce for sequential values.
 - [x] Built-in support for spying on function calls without mocking.

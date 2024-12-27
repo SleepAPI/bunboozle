@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { afterEach, Mock, spyOn } from 'bun:test';
+import { Mock, spyOn } from 'bun:test';
 import { ExtractFunction, MockImplementation, ModuleKey, ModuleValue } from './types/types.js';
 
 const activeSpies = new Set<Mock<(...args: any[]) => any>>();
-let restoreHookRegistered = false;
 
 /**
  * Main boozle function to mock functions or variables.
@@ -15,10 +14,6 @@ export function boozle<T extends Record<string, ModuleValue>, TKey extends Modul
 ): Mock<MockImplementation<T, TKey>> {
   if (!(property in module)) {
     throw new Error(`${String(property)} is not a property of the provided module.`);
-  }
-
-  if (!restoreHookRegistered) {
-    registerMockRestoreHook();
   }
 
   const originalValue = module[property];
@@ -113,14 +108,10 @@ function mockVariable<T extends Record<string, ModuleValue>, TKey extends Module
   return spy;
 }
 
-function registerMockRestoreHook() {
-  afterEach(() => {
-    console.error('Restoring mocks');
-    for (const spy of activeSpies) {
-      console.error('Restored mock: ' + spy.name);
-      spy.mockRestore();
-    }
-    activeSpies.clear();
-    restoreHookRegistered = true;
-  });
+export function unboozle() {
+  for (const spy of activeSpies) {
+    console.error('Restored mock: ' + (spy.name || 'unnamed mock'));
+    spy.mockRestore();
+  }
+  activeSpies.clear();
 }
